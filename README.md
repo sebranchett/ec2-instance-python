@@ -11,6 +11,15 @@ This example includes:
 * Userdata executed from script in S3 (`configure.sh`).
 
 ## Setting up the environment
+Read this first:
+https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html
+
+and this:
+https://docs.aws.amazon.com/cdk/v2/guide/work-with.html#work-with-prerequisites
+
+and to set up Single Sign on, read this:
+https://tu-delft-ict-innovation.github.io/Cloud4Research/faq/awscli.html#2-directly-from-your-laptop-or-desktop-computer
+
 It is advisable to work in a virtual environment.
 ```
 python -m venv .venv
@@ -38,3 +47,4 @@ aws [--profile=optionalProfileName] sso login
  * `cdk synth`       emits the synthesized CloudFormation template
  * `cdk deploy`      deploy this stack to your default AWS account/region
  * `aws ssm start-session --target i-xxxxxxxxx` remote session for shell access
+ * `cdk destroy`     destroy this stack from your AWS account
