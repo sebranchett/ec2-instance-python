@@ -1,5 +1,7 @@
 
 # Create EC2 Instance in new VPC with Systems Manager enabled
+Started from the AWS example here:
+https://github.com/aws-samples/aws-cdk-examples/tree/master/python/ec2/instance
 
 This example includes:
 
