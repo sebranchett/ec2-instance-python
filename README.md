@@ -20,6 +20,9 @@ https://docs.aws.amazon.com/cdk/v2/guide/work-with.html#work-with-prerequisites
 and to set up Single Sign on, read this:
 https://tu-delft-ict-innovation.github.io/Cloud4Research/faq/awscli.html#2-directly-from-your-laptop-or-desktop-computer
 
+If you wish to access your EC2 instance from the command line (instead of the AWS Console), then read this:
+https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html
+
 It is advisable to work in a virtual environment.
 ```
 python -m venv .venv
@@ -47,4 +50,5 @@ aws [--profile=optionalProfileName] sso login
  * `cdk synth`       emits the synthesized CloudFormation template
  * `cdk deploy`      deploy this stack to your default AWS account/region
  * `aws ssm start-session --target i-xxxxxxxxx` remote session for shell access
+ * `aws ec2 describe-instances | grep InstanceId` find target ID
  * `cdk destroy`     destroy this stack from your AWS account
