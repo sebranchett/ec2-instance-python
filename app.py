@@ -34,12 +34,15 @@ class EC2InstanceStack(Stack):
             storage=ec2.AmazonLinuxStorage.GENERAL_PURPOSE
             )
 
-        # Instance Role and SSM Managed Policy
+        # Instance Role and SSM Managed Policy and S3 Managed Policy
         role = iam.Role(self, "InstanceSSM",
                         assumed_by=iam.ServicePrincipal("ec2.amazonaws.com"))
 
         role.add_managed_policy(iam.ManagedPolicy.from_aws_managed_policy_name(
                                 "AmazonSSMManagedInstanceCore"))
+
+        role.add_managed_policy(iam.ManagedPolicy.from_aws_managed_policy_name(
+                                "AmazonS3FullAccess"))
 
         # Instance
         instance = ec2.Instance(self, "Instance",
