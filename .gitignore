@@ -1,3 +1,4 @@
 .vscode/
 .venv/
 cdk.out/
+cdk.context.json

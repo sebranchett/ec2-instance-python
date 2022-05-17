@@ -1,8 +1,9 @@
 #!/bin/sh
 # Use this to install software packages
-pwd > /tmp/seb.txt
-which grep >> /tmp/seb.txt
-echo $HOME >> /tmp/seb.txt
-echo 'Now try s3 ------------' >> /tmp/seb.txt
-aws s3 ls >> /tmp/seb.txt
-aws s3 cp /tmp/seb.txt s3://seb-results-of-calculations
+sudo apt-get update -y
+echo 'docker here  ------------' > /tmp/output.txt
+which docker >> /tmp/output.txt
+echo 's3 buckets   ------------' >> /tmp/output.txt
+aws s3 ls >> /tmp/output.txt
+aws s3 cp /tmp/output.txt s3://seb-results-of-calculations
+sudo shutdown -h now

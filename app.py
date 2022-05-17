@@ -1,11 +1,12 @@
 import os.path
+import os
 
 from aws_cdk.aws_s3_assets import Asset
 
 from aws_cdk import (
     aws_ec2 as ec2,
     aws_iam as iam,
-    App, Stack
+    App, Stack, Environment
 )
 
 from constructs import Construct
@@ -18,6 +19,21 @@ class EC2InstanceStack(Stack):
     def __init__(self, scope: Construct, id: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
+        # Specify Instance type
+        # instance_type = ec2.InstanceType("t3.nano")
+        instance_type = ec2.InstanceType("t2.small")
+
+        # Specify AMI
+        # machine_image = ec2.MachineImage.latest_amazon_linux(
+        #     generation=ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
+        #     edition=ec2.AmazonLinuxEdition.STANDARD,
+        #     virtualization=ec2.AmazonLinuxVirt.HVM,
+        #     storage=ec2.AmazonLinuxStorage.GENERAL_PURPOSE
+        #     )
+        machine_image = ec2.MachineImage.lookup(
+            name="Deep Learning Base AMI (Ubuntu 18.04) Version ??.?",
+            owners=["amazon"])
+
         # VPC
         vpc = ec2.Vpc(self, "VPC",
                       nat_gateways=0,
@@ -25,14 +41,6 @@ class EC2InstanceStack(Stack):
                                             name="public",
                                             subnet_type=ec2.SubnetType.PUBLIC)]
                       )
-
-        # AMI
-        amzn_linux = ec2.MachineImage.latest_amazon_linux(
-            generation=ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
-            edition=ec2.AmazonLinuxEdition.STANDARD,
-            virtualization=ec2.AmazonLinuxVirt.HVM,
-            storage=ec2.AmazonLinuxStorage.GENERAL_PURPOSE
-            )
 
         # Instance Role and SSM Managed Policy and S3 Managed Policy
         role = iam.Role(self, "InstanceSSM",
@@ -46,8 +54,8 @@ class EC2InstanceStack(Stack):
 
         # Instance
         instance = ec2.Instance(self, "Instance",
-                                instance_type=ec2.InstanceType("t3.nano"),
-                                machine_image=amzn_linux,
+                                instance_type=instance_type,
+                                machine_image=machine_image,
                                 vpc=vpc,
                                 role=role
                                 )
@@ -68,6 +76,11 @@ class EC2InstanceStack(Stack):
 
 
 app = App()
-EC2InstanceStack(app, "ec2-instance")
+# Looking up an AMI requires a context, because an AMI is region dependent.
+# The env part below automatically creates a file 'cdk.context.json'.
+# Remove this file if there is an update to image, accounts or region.
+EC2InstanceStack(app, "ec2-instance", env=Environment(
+    account=os.environ["CDK_DEFAULT_ACCOUNT"],
+    region=os.environ["CDK_DEFAULT_REGION"]))
 
 app.synth()
