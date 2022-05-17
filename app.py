@@ -6,6 +6,7 @@ from aws_cdk.aws_s3_assets import Asset
 from aws_cdk import (
     aws_ec2 as ec2,
     aws_iam as iam,
+    aws_s3 as s3,
     App, Stack, Environment
 )
 
@@ -24,15 +25,12 @@ class EC2InstanceStack(Stack):
         instance_type = ec2.InstanceType("t2.small")
 
         # Specify AMI
-        # machine_image = ec2.MachineImage.latest_amazon_linux(
-        #     generation=ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
-        #     edition=ec2.AmazonLinuxEdition.STANDARD,
-        #     virtualization=ec2.AmazonLinuxVirt.HVM,
-        #     storage=ec2.AmazonLinuxStorage.GENERAL_PURPOSE
-        #     )
         machine_image = ec2.MachineImage.lookup(
             name="Deep Learning Base AMI (Ubuntu 18.04) Version ??.?",
             owners=["amazon"])
+
+        # Specify Bucket for output data
+        output_bucket_name = "seb-results-of-calculations"
 
         # VPC
         vpc = ec2.Vpc(self, "VPC",
@@ -48,9 +46,6 @@ class EC2InstanceStack(Stack):
 
         role.add_managed_policy(iam.ManagedPolicy.from_aws_managed_policy_name(
                                 "AmazonSSMManagedInstanceCore"))
-
-        role.add_managed_policy(iam.ManagedPolicy.from_aws_managed_policy_name(
-                                "AmazonS3FullAccess"))
 
         # Instance
         instance = ec2.Instance(self, "Instance",
@@ -73,6 +68,12 @@ class EC2InstanceStack(Stack):
             file_path=local_path
             )
         asset.grant_read(instance.role)
+
+        # Output data bucket permissions
+        output_bucket = s3.Bucket.from_bucket_name(
+                            self, id="Output Bucket",
+                            bucket_name=output_bucket_name)
+        output_bucket.grant_read_write(instance.role)
 
 
 app = App()
