@@ -29,7 +29,7 @@ class EC2InstanceStack(Stack):
             name="Deep Learning Base AMI (Ubuntu 18.04) Version ??.?",
             owners=["amazon"])
 
-        # Specify Bucket for output data
+        # Specify Bucket for input/output data
         output_bucket_name = "seb-results-of-calculations"
 
         # VPC
