@@ -7,8 +7,10 @@ This example includes:
 
 * Own VPC with public subnet (following AWS Defaults for new accounts)
 * System Manager replaces SSH (Remote session available through the AWS Console or the AWS CLI)
-* Userdata executed from script (`configure.sh`)
 * Read/write access to S3 bucket for input/output
+* Userdata executed from script (`configure.sh`)
+
+![EC2 with access from System Manager and to S3](./ec2-ssm-s3.png)
 
 ## Setting up the environment
 This example uses the Python version of AWS CDK (Cloud Development Kit). CDK allows you to create and use infrastructure in the AWS cloud from the command line of your local machine. If you are using Linux or MacOS, you can use a regular terminal window. If you are using a Windows machine, you can use Git Bash (https://gitforwindows.org/) or WSL (https://docs.microsoft.com/en-us/windows/wsl/install).
