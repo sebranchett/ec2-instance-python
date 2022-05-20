@@ -12,6 +12,10 @@ This example includes:
 
 ![EC2 with access from System Manager and to S3](./ec2-ssm-s3.png)
 
+Two alternates to consider:
+* If you do not need to use GPUs, please consider using AWS Fargate instead of EC2
+* To save costs, please consider using EC2 Spot instances
+
 ## Setting up the environment
 This example uses the Python version of AWS CDK (Cloud Development Kit). CDK allows you to create and use infrastructure in the AWS cloud from the command line of your local machine. If you are using Linux or MacOS, you can use a regular terminal window. If you are using a Windows machine, you can use Git Bash (https://gitforwindows.org/) or WSL (https://docs.microsoft.com/en-us/windows/wsl/install).
 
