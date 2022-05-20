@@ -12,7 +12,7 @@ This example includes:
 
 ![EC2 with access from System Manager and to S3](./ec2-ssm-s3.png)
 
-Two alternates to consider:
+Two alternatives to consider:
 * If you do not need to use GPUs, please consider using AWS Fargate instead of EC2
 * To save costs, please consider using EC2 Spot instances
 
