@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from aws_cdk import App, Environment
-from aws_cdk.assertions import Template
-# from aws_cdk.assertions import Capture, Match
+from aws_cdk.assertions import Template, Match
+# from aws_cdk.assertions import Capture
 
 from app.ec2_instance_stack import EC2InstanceStack
 
@@ -30,3 +30,20 @@ def test_vpc():
                          "Value": "ec2-instance/VPC"}]
                }
     )
+
+
+def test_ec2():
+    template.has_resource_properties(
+        "AWS::EC2::Instance",
+        {"InstanceType": Match.string_like_regexp("t2.small")}
+        )
+
+    template.has_resource_properties(
+        "AWS::EC2::Instance",
+        {"AvailabilityZone": Match.string_like_regexp("dummy1a")}
+        )
+
+    template.has_resource_properties(
+        "AWS::EC2::Instance",
+        {"ImageId": Match.string_like_regexp("ami-")}
+        )
