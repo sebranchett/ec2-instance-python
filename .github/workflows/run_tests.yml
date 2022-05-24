@@ -1,0 +1,28 @@
+name: Test AWS CDK
+# based on https://github.com/AdminTurnedDevOps/YouTube/blob/main/.github/workflows/main.yml
+
+# Controls when the action will run. 
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  aws_cdk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: install npm
+        run: 'sudo apt update -y && sudo apt install nodejs npm -y'
+
+      - name: Install AWS CDK
+        run: 'sudo npm install -g aws-cdk'
+
+      - name: Install Requirements 
+        run: 'pip3 install -r requirements.txt'
+
+      - name: Run tests
+        run: 'pytest'
