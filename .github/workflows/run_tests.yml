@@ -10,19 +10,28 @@ on:
 
 jobs:
   aws_cdk:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+  
+    runs-on: ${{ matrix.os }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: install npm
-        run: 'sudo apt update -y && sudo apt install nodejs npm -y'
+        uses: actions/setup-node@v3
 
       - name: Install AWS CDK
+        shell: bash
         run: 'sudo npm install -g aws-cdk'
 
-      - name: Install Requirements 
+      - name: Install Requirements
+        shell: bash
         run: 'pip3 install -r requirements.txt'
 
       - name: Run tests
+        shell: bash
         run: 'pytest'
