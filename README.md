@@ -61,7 +61,7 @@ You can use `pytest` to check that everything is set up properly.
 
 This example connects to the S3 bucket `s3://tudelft-results-of-calculations`. You do not have access to this bucket, so you will need to create a bucket of your own and change the name in `configure.sh`.
 
-See the [Useful Commands](#useful-commands) below.
+See the [Useful Commands](#useful-commands) below to bootstrap your AWS CDK environment, synthesize a CloudFormation template from the Python code and deploy the template to your AWS environment.
 
 ## Now experiment!
 You can specify the EC2 instance type, the AMI and the S3 bucket for input/output data in `app.py`.
