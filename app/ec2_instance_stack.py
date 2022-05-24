@@ -30,7 +30,7 @@ class EC2InstanceStack(Stack):
             owners=["amazon"])
 
         # Specify Bucket for input/output data
-        output_bucket_name = "seb-results-of-calculations"
+        output_bucket_name = "tudelft-results-of-calculations"
 
         # VPC
         vpc = ec2.Vpc(self, "VPC",
