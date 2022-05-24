@@ -47,3 +47,10 @@ def test_ec2():
         "AWS::EC2::Instance",
         {"ImageId": Match.string_like_regexp("ami-")}
         )
+
+
+def test_iam_policy():
+    template.has_resource_properties(
+        "AWS::IAM::Policy",
+        {"PolicyName": Match.string_like_regexp("InstanceSSMDefaultPolicy")}
+        )
