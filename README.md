@@ -3,7 +3,7 @@
 Based on the AWS example here:
 https://github.com/aws-samples/aws-cdk-examples/tree/master/python/ec2/instance
 
-This example was originally intended for AI researchers that require bare-bones access to GPUs and includes:
+This adaptation was originally intended for AI researchers who require bare-bones access to GPUs and includes:
 
 * Own VPC with public subnet (following AWS Defaults for new accounts)
 * System Manager replaces SSH (Remote session available through the AWS Console or the AWS CLI)
@@ -12,9 +12,10 @@ This example was originally intended for AI researchers that require bare-bones 
 
 ![EC2 with access from System Manager and to S3](./ec2-ssm-s3.png)
 
-Two alternatives to consider:
+Three alternatives to consider:
 * If you do not need to use GPUs, please consider using AWS Fargate instead of EC2
 * To save costs, please consider using EC2 Spot instances
+* If you do not need bare-bones access, please consider SageMaker
 
 ## Setting up the environment
 This example uses the Python version of AWS CDK (Cloud Development Kit). CDK allows you to create and use infrastructure in the AWS cloud from the command line of your local machine. If you are using Linux or MacOS, you can use a regular terminal window. If you are using a Windows machine, you can use Git Bash (https://gitforwindows.org/) or WSL (https://docs.microsoft.com/en-us/windows/wsl/install).
@@ -61,12 +62,10 @@ You can use `pytest` to check that everything is set up properly.
 
 This example connects to the S3 bucket `s3://tudelft-results-of-calculations`. You do not have access to this bucket, so you will need to create a bucket of your own and change the name in `configure.sh` and in `app/ec2_instance_stack.py`.
 
-In `app/ec2_instance_stack.py` you can also change the `instance_type` (GPU, CPU, etc.) and the `machine_image` (AMI).
-
 See the [Useful Commands](#useful-commands) below to bootstrap your AWS CDK environment, synthesize a CloudFormation template from the Python code and deploy the template to your AWS environment.
 
 ## Now experiment!
-You can specify the EC2 instance type, the AMI and the S3 bucket for input/output data in `app.py`.
+You can specify the EC2 instance type, the AMI and the S3 bucket for input/output data in `app/ec2_instance_stack.py`.
 
 You can specify the commands that will be run on startup in `configure.sh`. In the file provided, be sure to change the name of the S3 bucket. Shutting down at the end of the script means that you will no longer be charged for the EC2 instance, though there will be some charges for the local disk storage.
 
@@ -78,7 +77,7 @@ and then copied to the S3 bucket.
 
 A better solution would be to use Amazon Elastic Container Registry (ECR).
 
-Note that the AMI used in `app.py` has Docker already installed. You may have to install it yourself, depending on the AMI you choose.
+Note that the AMI used in `app/ec2_instance_stack.py` has Docker already installed. You may have to install it yourself, depending on the AMI you choose.
 
 ## Useful commands
 
