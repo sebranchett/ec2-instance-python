@@ -3,7 +3,7 @@
 Based on the AWS example here:
 https://github.com/aws-samples/aws-cdk-examples/tree/master/python/ec2/instance
 
-This example includes:
+This example was originally intended for AI researchers that require bare-bones access to GPUs and includes:
 
 * Own VPC with public subnet (following AWS Defaults for new accounts)
 * System Manager replaces SSH (Remote session available through the AWS Console or the AWS CLI)
@@ -59,7 +59,9 @@ pip install -r requirements.txt
 ```
 You can use `pytest` to check that everything is set up properly.
 
-This example connects to the S3 bucket `s3://tudelft-results-of-calculations`. You do not have access to this bucket, so you will need to create a bucket of your own and change the name in `configure.sh`.
+This example connects to the S3 bucket `s3://tudelft-results-of-calculations`. You do not have access to this bucket, so you will need to create a bucket of your own and change the name in `configure.sh` and in `app/ec2_instance_stack.py`.
+
+In `app/ec2_instance_stack.py` you can also change the `instance_type` (GPU, CPU, etc.) and the `machine_image` (AMI).
 
 See the [Useful Commands](#useful-commands) below to bootstrap your AWS CDK environment, synthesize a CloudFormation template from the Python code and deploy the template to your AWS environment.
 
