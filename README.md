@@ -67,7 +67,7 @@ See the [Useful Commands](#useful-commands) below to bootstrap your AWS CDK envi
 ## Now experiment!
 You can specify the EC2 instance type, the AMI and the S3 bucket for input/output data in `app/ec2_instance_stack.py`.
 
-You can specify the commands that will be run on startup in `configure.sh`. In the file provided, be sure to change the name of the S3 bucket. Shutting down at the end of the script means that you will no longer be charged for the EC2 instance, though there will be some charges for the local disk storage.
+You can specify the commands that will be run on startup in `configure.sh`. In the file provided, be sure to change the name of the S3 bucket. Shutting down at the end of the script means that you will no longer be charged for the EC2 instance, though there will be some charges for storage.
 
 `docker_example_configure.sh` shows an example of how you could run a Docker container in this setup. The image has been 'tar-ed' using:
 ```
