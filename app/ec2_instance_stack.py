@@ -1,8 +1,6 @@
 import os.path
 import os
 
-from aws_cdk.aws_s3_assets import Asset
-
 from aws_cdk import (
     aws_ec2 as ec2,
     aws_iam as iam,
@@ -46,7 +44,7 @@ class EC2InstanceStack(Stack):
                 ]
             )
 
-        # Instance Role and SSM Managed Policy and S3 Managed Policy
+        # Instance Role and SSM Managed Policy
         role = iam.Role(
             self,
             "InstanceSSM",
@@ -60,31 +58,19 @@ class EC2InstanceStack(Stack):
             )
 
         # Instance
+        # Script in user data startup script
+        with open("./configure.sh") as f:
+            user_data = f.read()
+
         instance = ec2.Instance(
             self,
             "Instance",
             instance_type=instance_type,
             machine_image=machine_image,
             vpc=vpc,
-            role=role
+            role=role,
+            user_data=ec2.UserData.custom(user_data)
         )
-
-        # Script in S3 as Asset
-        asset = Asset(
-            self,
-            "Asset",
-            path=os.path.join(dirname, "../configure.sh")
-        )
-        local_path = instance.user_data.add_s3_download_command(
-            bucket=asset.bucket,
-            bucket_key=asset.s3_object_key
-        )
-
-        # Userdata executes script from S3
-        instance.user_data.add_execute_file_command(
-            file_path=local_path
-        )
-        asset.grant_read(instance.role)
 
         # Output data bucket permissions
         output_bucket = s3.Bucket.from_bucket_name(
