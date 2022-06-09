@@ -1,6 +1,13 @@
 #!/bin/sh
 # Use this to install software packages
-sudo apt-get update -y
+if VERB="$( which apt-get )" 2> /dev/null; then
+   sudo apt-get update -y
+elif VERB="$( which yum )" 2> /dev/null; then
+   sudo yum update -y
+else
+   echo "WARNING: Could not update the system" >&2
+fi
+
 mkdir /tmp/home
 echo 'docker here   ------------' > /tmp/home/output.txt
 which docker >> /tmp/home/output.txt
