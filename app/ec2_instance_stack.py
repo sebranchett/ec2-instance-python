@@ -27,37 +27,54 @@ class EC2InstanceStack(Stack):
         # Specify AMI
         machine_image = ec2.MachineImage.lookup(
             name="Deep Learning Base AMI (Ubuntu 18.04) Version ??.?",
-            owners=["amazon"])
+            owners=["amazon"]
+        )
 
         # Specify Bucket for input/output data
         output_bucket_name = "tudelft-results-of-calculations"
 
         # VPC
-        vpc = ec2.Vpc(self, "VPC",
-                      nat_gateways=0,
-                      subnet_configuration=[ec2.SubnetConfiguration(
-                                            name="public",
-                                            subnet_type=ec2.SubnetType.PUBLIC)]
-                      )
+        vpc = ec2.Vpc(
+            self,
+            "VPC",
+            nat_gateways=0,
+            subnet_configuration=[
+                ec2.SubnetConfiguration(
+                    name="public",
+                    subnet_type=ec2.SubnetType.PUBLIC
+                    )
+                ]
+            )
 
         # Instance Role and SSM Managed Policy and S3 Managed Policy
-        role = iam.Role(self, "InstanceSSM",
-                        assumed_by=iam.ServicePrincipal("ec2.amazonaws.com"))
+        role = iam.Role(
+            self,
+            "InstanceSSM",
+            assumed_by=iam.ServicePrincipal("ec2.amazonaws.com")
+        )
 
-        role.add_managed_policy(iam.ManagedPolicy.from_aws_managed_policy_name(
-                                "AmazonSSMManagedInstanceCore"))
+        role.add_managed_policy(
+            iam.ManagedPolicy.from_aws_managed_policy_name(
+                "AmazonSSMManagedInstanceCore"
+                )
+            )
 
         # Instance
-        instance = ec2.Instance(self, "Instance",
-                                instance_type=instance_type,
-                                machine_image=machine_image,
-                                vpc=vpc,
-                                role=role
-                                )
+        instance = ec2.Instance(
+            self,
+            "Instance",
+            instance_type=instance_type,
+            machine_image=machine_image,
+            vpc=vpc,
+            role=role
+        )
 
         # Script in S3 as Asset
-        asset = Asset(self, "Asset",
-                      path=os.path.join(dirname, "../configure.sh"))
+        asset = Asset(
+            self,
+            "Asset",
+            path=os.path.join(dirname, "../configure.sh")
+        )
         local_path = instance.user_data.add_s3_download_command(
             bucket=asset.bucket,
             bucket_key=asset.s3_object_key
@@ -66,11 +83,12 @@ class EC2InstanceStack(Stack):
         # Userdata executes script from S3
         instance.user_data.add_execute_file_command(
             file_path=local_path
-            )
+        )
         asset.grant_read(instance.role)
 
         # Output data bucket permissions
         output_bucket = s3.Bucket.from_bucket_name(
-                            self, id="Output Bucket",
-                            bucket_name=output_bucket_name)
+            self, id="Output Bucket",
+            bucket_name=output_bucket_name
+        )
         output_bucket.grant_read_write(instance.role)

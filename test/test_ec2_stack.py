@@ -36,21 +36,21 @@ def test_ec2():
     template.has_resource_properties(
         "AWS::EC2::Instance",
         {"InstanceType": Match.string_like_regexp("t2.small")}
-        )
+    )
 
     template.has_resource_properties(
         "AWS::EC2::Instance",
         {"AvailabilityZone": Match.string_like_regexp("dummy1a")}
-        )
+    )
 
     template.has_resource_properties(
         "AWS::EC2::Instance",
         {"ImageId": Match.string_like_regexp("ami-")}
-        )
+    )
 
 
 def test_iam_policy():
     template.has_resource_properties(
         "AWS::IAM::Policy",
         {"PolicyName": Match.string_like_regexp("InstanceSSMDefaultPolicy")}
-        )
+    )
