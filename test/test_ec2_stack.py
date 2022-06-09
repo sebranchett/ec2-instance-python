@@ -1,13 +1,20 @@
 #!/usr/bin/env python3
 from aws_cdk import App, Environment
 from aws_cdk.assertions import Template, Match
-# from aws_cdk.assertions import Capture
 
 from app.ec2_instance_stack import EC2InstanceStack
 
 app = App()
-ec2_stack = EC2InstanceStack(app, "ec2-instance", env=Environment(
-                account="123456789012", region="eu-central-1"))
+ec2_stack = EC2InstanceStack(
+    app, "ec2-instance",
+    instance_type="t2.small",
+    ami_name="Deep Learning Base AMI (Ubuntu 18.04) Version ??.?",
+    ami_owner=["amazon"],
+    bucket_name="tudelft-results-of-calculations",
+    env=Environment(
+        account="123456789012", region="eu-central-1"
+    )
+)
 
 # Prepare the stack for assertions.
 template = Template.from_stack(ec2_stack)

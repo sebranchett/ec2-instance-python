@@ -1,6 +1,4 @@
-import os.path
-import os
-
+from typing import Sequence
 from aws_cdk import (
     aws_ec2 as ec2,
     aws_iam as iam,
@@ -10,26 +8,18 @@ from aws_cdk import (
 
 from constructs import Construct
 
-dirname = os.path.dirname(__file__)
-
 
 class EC2InstanceStack(Stack):
 
-    def __init__(self, scope: Construct, id: str, **kwargs) -> None:
+    def __init__(
+        self, scope: Construct, id: str,
+        instance_type: str,
+        ami_name: str,
+        ami_owner: Sequence[str],
+        bucket_name: str,
+        **kwargs
+    ) -> None:
         super().__init__(scope, id, **kwargs)
-
-        # Specify Instance type
-        # instance_type = ec2.InstanceType("t3.nano")
-        instance_type = ec2.InstanceType("t2.small")
-
-        # Specify AMI
-        machine_image = ec2.MachineImage.lookup(
-            name="Deep Learning Base AMI (Ubuntu 18.04) Version ??.?",
-            owners=["amazon"]
-        )
-
-        # Specify Bucket for input/output data
-        output_bucket_name = "tudelft-results-of-calculations"
 
         # VPC
         vpc = ec2.Vpc(
@@ -58,6 +48,12 @@ class EC2InstanceStack(Stack):
             )
 
         # Instance
+        # Look up machine image
+        machine_image = ec2.MachineImage.lookup(
+            name=ami_name,
+            owners=ami_owner
+        )
+
         # Script in user data startup script
         with open("./configure.sh") as f:
             user_data = f.read()
@@ -65,16 +61,16 @@ class EC2InstanceStack(Stack):
         instance = ec2.Instance(
             self,
             "Instance",
-            instance_type=instance_type,
+            instance_type=ec2.InstanceType(instance_type),
             machine_image=machine_image,
             vpc=vpc,
             role=role,
             user_data=ec2.UserData.custom(user_data)
         )
 
-        # Output data bucket permissions
-        output_bucket = s3.Bucket.from_bucket_name(
-            self, id="Output Bucket",
-            bucket_name=output_bucket_name
+        # Results data bucket permissions
+        results_bucket = s3.Bucket.from_bucket_name(
+            self, id="Results Bucket",
+            bucket_name=bucket_name
         )
-        output_bucket.grant_read_write(instance.role)
+        results_bucket.grant_read_write(instance.role)
