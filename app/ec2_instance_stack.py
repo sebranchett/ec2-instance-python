@@ -1,9 +1,8 @@
-from typing import Sequence
 from aws_cdk import (
     aws_ec2 as ec2,
     aws_iam as iam,
     aws_s3 as s3,
-    Stack
+    Stack, CfnParameter
 )
 
 from constructs import Construct
@@ -15,7 +14,7 @@ class EC2InstanceStack(Stack):
         self, scope: Construct, id: str,
         instance_type: str,
         ami_name: str,
-        ami_owner: Sequence[str],
+        ami_owner: str,
         bucket_name: str,
         **kwargs
     ) -> None:
@@ -48,10 +47,14 @@ class EC2InstanceStack(Stack):
             )
 
         # Instance
+        instance_type_parameter = CfnParameter(
+            self, 'instance_type_parameter', default=instance_type
+        )
+
         # Look up machine image
         machine_image = ec2.MachineImage.lookup(
             name=ami_name,
-            owners=ami_owner
+            owners=[ami_owner]
         )
 
         # Script in user data startup script
@@ -61,16 +64,21 @@ class EC2InstanceStack(Stack):
         instance = ec2.Instance(
             self,
             "Instance",
-            instance_type=ec2.InstanceType(instance_type),
+            instance_type=ec2.InstanceType(
+                instance_type_parameter.value_as_string
+            ),
             machine_image=machine_image,
             vpc=vpc,
             role=role,
             user_data=ec2.UserData.custom(user_data)
         )
 
-        # Results data bucket permissions
-        results_bucket = s3.Bucket.from_bucket_name(
-            self, id="Results Bucket",
-            bucket_name=bucket_name
+        # Research bucket permissions
+        bucket_parameter = CfnParameter(
+            self, 'bucket_parameter', default=bucket_name
         )
-        results_bucket.grant_read_write(instance.role)
+        research_bucket = s3.Bucket.from_bucket_name(
+            self, id="Research Bucket",
+            bucket_name=bucket_parameter.value_as_string
+        )
+        research_bucket.grant_read_write(instance.role)

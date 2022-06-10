@@ -12,7 +12,7 @@ instance_type = "t2.small"
 
 # Specify machine image by defining AMI name and owner
 ami_name = "Deep Learning Base AMI (Ubuntu 18.04) Version ??.?"
-ami_owner = ["amazon"]
+ami_owner = "amazon"
 
 # Specify Bucket for input/output data
 bucket_name = "tudelft-results-of-calculations"

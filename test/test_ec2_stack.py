@@ -9,7 +9,7 @@ ec2_stack = EC2InstanceStack(
     app, "ec2-instance",
     instance_type="t2.small",
     ami_name="Deep Learning Base AMI (Ubuntu 18.04) Version ??.?",
-    ami_owner=["amazon"],
+    ami_owner="amazon",
     bucket_name="tudelft-results-of-calculations",
     env=Environment(
         account="123456789012", region="eu-central-1"
@@ -42,7 +42,7 @@ def test_vpc():
 def test_ec2():
     template.has_resource_properties(
         "AWS::EC2::Instance",
-        {"InstanceType": Match.string_like_regexp("t2.small")}
+        {"InstanceType": Match.object_like({"Ref": "instancetypeparameter"})}
     )
 
     template.has_resource_properties(
@@ -53,6 +53,22 @@ def test_ec2():
     template.has_resource_properties(
         "AWS::EC2::Instance",
         {"ImageId": Match.string_like_regexp("ami-")}
+    )
+
+
+def test_parameters():
+    template.has_parameter(
+        "instancetypeparameter",
+        {"Default": Match.string_like_regexp("t2.small")}
+    )
+
+    template.has_parameter(
+        "bucketparameter",
+        {
+            "Default": Match.string_like_regexp(
+                "tudelft-results-of-calculations"
+            )
+        }
     )
 
 
