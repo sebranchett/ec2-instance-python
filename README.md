@@ -17,7 +17,7 @@ Three alternatives to consider:
 * To save costs, please consider using EC2 Spot instances
 * If you do not need bare-bones access, please consider SageMaker
 
-**WARNING:** This architecture uses a public IP for the EC2 instance to access an S3 bucket. If you have sensitive data, please use a VPC endpoint instead. Also, enable encryption for EC2 storage volumes.
+**WARNING:** This architecture uses a public IP for the EC2 instance to access an S3 bucket. If you have sensitive data, please use a VPC endpoint instead. Also, enable encryption for EC2 storage volumes and consider more restrictive assumed roles.
 
 ## Setting up the environment
 This example uses the Python version of AWS CDK (Cloud Development Kit). CDK allows you to create and use infrastructure in the AWS cloud from the command line of your local machine. If you are using Linux or MacOS, you can use a regular terminal window. If you are using a Windows machine, you can use Git Bash (https://gitforwindows.org/) or WSL (https://docs.microsoft.com/en-us/windows/wsl/install).
