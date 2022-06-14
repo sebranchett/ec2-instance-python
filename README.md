@@ -17,7 +17,7 @@ Three alternatives to consider:
 * To save costs, please consider using EC2 Spot instances
 * If you do not need bare-bones access, please consider SageMaker
 
-**WARNING:** This architecture uses a public IP for the EC2 instance to access an S3 bucket. If you have sensitive data, please use a VPC endpoint instead.
+**WARNING:** This architecture uses a public IP for the EC2 instance to access an S3 bucket. If you have sensitive data, please use a VPC endpoint instead. Also, enable encryption for EC2 storage volumes.
 
 ## Setting up the environment
 This example uses the Python version of AWS CDK (Cloud Development Kit). CDK allows you to create and use infrastructure in the AWS cloud from the command line of your local machine. If you are using Linux or MacOS, you can use a regular terminal window. If you are using a Windows machine, you can use Git Bash (https://gitforwindows.org/) or WSL (https://docs.microsoft.com/en-us/windows/wsl/install).
@@ -63,6 +63,7 @@ pip install -r requirements.txt
 You can use `pytest` to check that everything is set up properly.
 
 This example connects to the S3 bucket `s3://tudelft-results-of-calculations`. You do not have access to this bucket, so you will need to create a bucket of your own and change the name in `configure.sh` and in `app.py`.
+It's good practice to restrict bucket access to only those who need it. You will be charged for data downloads. It's also good practice to encrypt the data in a bucket. Don't forget to tick the 'Enable' box.
 
 See the [Useful Commands](#useful-commands) below to bootstrap your AWS CDK environment, synthesize a CloudFormation template from the Python code and deploy the template to your AWS environment.
 
