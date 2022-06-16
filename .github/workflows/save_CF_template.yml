@@ -35,7 +35,7 @@ jobs:
 
       - name: Create config file
         run: |-
-          cat <<EOF > ~/.aws/config
+          cat <<EOF > ${{ github.workspace }}/.aws/config
           [default]
           region = eu-central-1
           EOF
