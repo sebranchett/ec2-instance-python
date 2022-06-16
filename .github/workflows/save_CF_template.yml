@@ -35,11 +35,6 @@ jobs:
 
       - name: Run CDK synth
         run: 'cdk synth'
-        env:
-          AWS_REGION: "eu-central-1"
-          AWS_DEFAULT_REGION: "eu-central-1"
-          AWS_ACCESS_KEY_ID: "this_is_not_a_key_id"
-          AWS_SECRET_ACCESS_KEY: "this_is_not_an_access_key"
 
       - name: Save CloudFormation template
         uses: actions/upload-artifact@v3
