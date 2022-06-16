@@ -3,8 +3,8 @@ name: Save CloudFormation template
 
 on:
   # When it works, uncomment these 2 lines:
-  release:
-    types: [published]
+  # release:
+  #   types: [published]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
