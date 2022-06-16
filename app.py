@@ -11,8 +11,11 @@ from app.ec2_instance_stack import EC2InstanceStack
 instance_type = "t2.small"
 
 # Specify machine image by defining AMI name and owner
-ami_name = "Deep Learning Base AMI (Ubuntu 18.04) Version ??.?"
-ami_owner = "amazon"
+# ami_name = "Deep Learning Base AMI (Ubuntu 18.04) Version ??.?"
+# ami_owner = "amazon"
+# if left blank, revert to a default that doesn't need credentials
+ami_name = ""
+ami_owner = ""
 
 # Specify Bucket for input/output data
 bucket_name = "tudelft-results-of-calculations"
