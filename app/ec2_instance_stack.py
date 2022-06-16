@@ -52,15 +52,9 @@ class EC2InstanceStack(Stack):
         )
 
         # Look up machine image
-        if (ami_name == "" and ami_owner == ""):
-            machine_image = ec2.MachineImage.generic_linux(
+        machine_image = ec2.MachineImage.generic_linux(
                 {"eu-central-1": "[ami-0725cc4250e6cb8ba]"}
-            )
-        else:
-            machine_image = ec2.MachineImage.lookup(
-                name=ami_name,
-                owners=[ami_owner]
-            )
+        )
 
         # Script in user data startup script
         with open("./configure.sh") as f:
