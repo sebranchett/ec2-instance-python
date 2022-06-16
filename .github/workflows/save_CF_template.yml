@@ -5,19 +5,15 @@ on:
   # When it works, uncomment these 2 lines:
   # release:
   #   types: [published]
-  push:
-    branches:
-      - CF-artifact
+  # push:
+  #   branches:
+  #     - CF-artifact
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-env:
-  CDK_DEFAULT_ACCOUNT: "123456789012"
-  CDK_DEFAULT_REGION: "eu-central-1"
-
 jobs:
-  aws_cdk:  
+  aws_cdk:
     runs-on: ubuntu-latest
 
     steps:
