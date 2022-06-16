@@ -33,6 +33,13 @@ jobs:
       - name: Install Requirements
         run: 'pip3 install -r requirements.txt'
 
+      - name: Create config file
+        run: |-
+          cat <<EOF > ~/.aws/config
+          [default]
+          region = eu-central-1
+          EOF
+
       - name: Run CDK synth
         run: 'cdk synth'
 
