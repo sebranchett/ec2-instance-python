@@ -59,7 +59,7 @@ class EC2InstanceStack(Stack):
         )
 
         # Script in user data startup script
-        with open("./configure.sh") as f:
+        with open("./startup.sh") as f:
             user_data = f.read()
 
         instance = ec2.Instance(

@@ -8,7 +8,7 @@ This adaptation was originally intended for AI researchers who require bare-bone
 * Own VPC with public subnet (following AWS Defaults for new accounts)
 * System Manager replaces SSH (Remote session available through the AWS Console or the AWS CLI)
 * Read/write access to S3 bucket for input/output
-* Userdata executed from script (`configure.sh`)
+* Userdata executed from script (`startup.sh`)
 
 ![EC2 with access from System Manager and to S3](./ec2-ssm-s3.png)
 
@@ -62,7 +62,7 @@ pip install -r requirements.txt
 ```
 You can use `pytest` to check that everything is set up properly.
 
-This example connects to the S3 bucket `s3://tudelft-results-of-calculations`. You do not have access to this bucket, so you will need to create a bucket of your own and change the name in `configure.sh` and in `app.py`.
+This example connects to the S3 bucket `s3://tudelft-results-of-calculations`. You do not have access to this bucket, so you will need to create a bucket of your own and change the name in `startup.sh` and in `app.py`.
 It's good practice to restrict bucket access to only those who need it. You will be charged for data downloads. It's also good practice to encrypt the data in a bucket. Don't forget to tick the 'Enable' box.
 
 See the [Useful Commands](#useful-commands) below to bootstrap your AWS CDK environment, synthesize a CloudFormation template from the Python code and deploy the template to your AWS environment.
@@ -70,9 +70,9 @@ See the [Useful Commands](#useful-commands) below to bootstrap your AWS CDK envi
 ## Now experiment!
 You can specify the EC2 instance type, the AMI and the S3 bucket for input/output data in `app.py`.
 
-You can specify the commands that will be run on startup in `configure.sh`. In the file provided, be sure to change the name of the S3 bucket. Shutting down at the end of the script means that you will no longer be charged for the EC2 instance, though there will be some charges for storage.
+You can specify the commands that will be run on startup in `startup.sh`. In the file provided, be sure to change the name of the S3 bucket. Shutting down at the end of the script means that you will no longer be charged for the EC2 instance, though there will be some charges for storage.
 
-`docker_example_configure.sh` shows an example of how you could run a Docker container in this setup. The image has been 'tar-ed' using:
+`docker_example_startup.sh` shows an example of how you could run a Docker container in this setup. The image has been 'tar-ed' using:
 ```
 docker save <image_name> > <image_tar_name>.tar
 ```
