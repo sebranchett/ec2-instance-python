@@ -9,7 +9,7 @@ from app.ec2_instance_stack import EC2InstanceStack
 
 # General configuration variables
 config_yaml = yaml.load(
-    open('ec2-config.yaml'), Loader=yaml.FullLoader)
+    open('config.yaml'), Loader=yaml.FullLoader)
 
 # Specify Instance type
 instance_type = config_yaml["instance_type"]

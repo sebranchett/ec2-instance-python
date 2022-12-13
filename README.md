@@ -68,7 +68,7 @@ It's good practice to restrict bucket access to only those who need it. You will
 See the [Useful Commands](#useful-commands) below to bootstrap your AWS CDK environment, synthesize a CloudFormation template from the Python code and deploy the template to your AWS environment.
 
 ## Now experiment!
-You can specify the EC2 instance type, the AMI and the S3 bucket for input/output data in `app.py`.
+You can specify the EC2 instance type, the AMI and the S3 bucket for input/output data in `config.yaml`.
 
 You can specify the commands that will be run on startup in `startup.sh`. In the file provided, be sure to change the name of the S3 bucket. Shutting down at the end of the script means that you will no longer be charged for the EC2 instance, though there will be some charges for storage.
 
