@@ -24,6 +24,7 @@ class EC2InstanceStack(Stack):
         vpc = ec2.Vpc(
             self,
             "VPC",
+            max_azs=1,
             nat_gateways=0,
             subnet_configuration=[
                 ec2.SubnetConfiguration(

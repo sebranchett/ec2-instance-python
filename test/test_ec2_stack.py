@@ -22,7 +22,7 @@ template = Template.from_stack(ec2_stack)
 
 def test_synthesizes_properly():
     template.resource_count_is(type="AWS::EC2::Instance", count=1)
-    template.resource_count_is(type="AWS::EC2::Subnet", count=3)
+    template.resource_count_is(type="AWS::EC2::Subnet", count=1)
     template.resource_count_is(type="AWS::IAM::Policy", count=1)
 
 
