@@ -1,0 +1,6 @@
+---
+
+instance_type: 't2.small'
+ami_name: 'Deep Learning Base AMI (Ubuntu 18.04) Version ??.?'
+ami_owner: 'amazon'
+bucket_name: 'tudelft-results-of-calculations'

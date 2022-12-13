@@ -1,4 +1,5 @@
 import os
+import yaml
 
 from aws_cdk import (
     App, Environment
@@ -6,16 +7,19 @@ from aws_cdk import (
 
 from app.ec2_instance_stack import EC2InstanceStack
 
+# General configuration variables
+config_yaml = yaml.load(
+    open('ec2-config.yaml'), Loader=yaml.FullLoader)
 
 # Specify Instance type
-instance_type = "t2.small"
+instance_type = config_yaml["instance_type"]
 
 # Specify machine image by defining AMI name and owner
-ami_name = "Deep Learning Base AMI (Ubuntu 18.04) Version ??.?"
-ami_owner = "amazon"
+ami_name = config_yaml["ami_name"]
+ami_owner = config_yaml["ami_owner"]
 
 # Specify Bucket for input/output data
-bucket_name = "tudelft-results-of-calculations"
+bucket_name = config_yaml["bucket_name"]
 
 app = App()
 # Looking up an AMI requires a context, because an AMI is region dependent.
