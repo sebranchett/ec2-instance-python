@@ -1,0 +1,7 @@
+---
+
+instance_type: 'g4dn.xlarge'
+ami_alias: '/aws/service/marketplace/prod-rt6cjlgfihk3w/latest'
+ami_name: ''
+ami_owner: ''
+bucket_name: 'tudelft-results-of-calculations'

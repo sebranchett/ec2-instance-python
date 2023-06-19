@@ -1,7 +1,7 @@
 ---
 
-instance_type: 'g4dn.xlarge'
-ami_alias: '/aws/service/marketplace/prod-rt6cjlgfihk3w/latest'
-ami_name: ''
-ami_owner: ''
+instance_type: 't2.small'
+ami_alias: ''
+ami_name: 'Deep Learning Base AMI (Ubuntu 18.04) Version ??.?'
+ami_owner: 'amazon'
 bucket_name: 'tudelft-results-of-calculations'
