@@ -70,6 +70,8 @@ See the [Useful Commands](#useful-commands) below to bootstrap your AWS CDK envi
 ## Now experiment!
 You can specify the EC2 instance type, the AMI and the S3 bucket for input/output data in `config.yaml`.
 
+For the AMI, you can either specify an AMI alias, or you can specify the AMI name and the owner of the AMI.  If you are using an [AWS Marketplace](https://aws.amazon.com/marketplace) AMI, you can find the AMI id and alias by clicking 'Continue to Subscribe' and then 'Continue to Configuration'. Make sure you select the correct region.
+
 You can specify the commands that will be run on startup in `startup.sh`. In the file provided, be sure to change the name of the S3 bucket. Shutting down at the end of the script means that you will no longer be charged for the EC2 instance, though there will be some charges for storage.
 
 `docker_example_startup.sh` shows an example of how you could run a Docker container in this setup. The image has been 'tar-ed' using:
