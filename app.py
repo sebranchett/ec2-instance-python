@@ -15,6 +15,7 @@ config_yaml = yaml.load(
 instance_type = config_yaml["instance_type"]
 
 # Specify machine image by defining AMI name and owner
+ami_alias = config_yaml["ami_alias"]
 ami_name = config_yaml["ami_name"]
 ami_owner = config_yaml["ami_owner"]
 
@@ -28,6 +29,7 @@ app = App()
 EC2InstanceStack(
     app, "ec2-instance",
     instance_type=instance_type,
+    ami_alias=ami_alias,
     ami_name=ami_name,
     ami_owner=ami_owner,
     bucket_name=bucket_name,

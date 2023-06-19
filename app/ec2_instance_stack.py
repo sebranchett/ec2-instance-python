@@ -13,6 +13,7 @@ class EC2InstanceStack(Stack):
     def __init__(
         self, scope: Construct, id: str,
         instance_type: str,
+        ami_alias: str,
         ami_name: str,
         ami_owner: str,
         bucket_name: str,
@@ -53,10 +54,16 @@ class EC2InstanceStack(Stack):
         )
 
         # Look up machine image
-        machine_image = ec2.MachineImage.lookup(
-            name=ami_name,
-            owners=[ami_owner]
-        )
+        if len(ami_alias) > 0:
+            machine_image = ec2.MachineImage.from_ssm_parameter(
+                parameter_name=ami_alias,
+                os=ec2.OperatingSystemType.UNKNOWN
+            )
+        else:
+            machine_image = ec2.MachineImage.lookup(
+                name=ami_name,
+                owners=[ami_owner]
+            )
 
         # Script in user data startup script
         with open("./startup.sh") as f:
