@@ -8,6 +8,7 @@ app = App()
 ec2_stack = EC2InstanceStack(
     app, "ec2-instance",
     instance_type="t2.small",
+    ami_alias="",
     ami_name="Deep Learning Base AMI (Ubuntu 18.04) Version ??.?",
     ami_owner="amazon",
     bucket_name="tudelft-results-of-calculations",
