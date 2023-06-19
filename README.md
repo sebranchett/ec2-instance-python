@@ -84,6 +84,8 @@ A better solution would be to use Amazon Elastic Container Registry (ECR).
 
 Note that the AMI used in `app.py` has Docker already installed. You may have to install it yourself, depending on the AMI you choose.
 
+For an example using a GPU, see the files in the 'gpu_example' directory.  You may need to [increase your GPU quota](https://tu-delft-ict-innovation.github.io/Cloud4Research/faq/quotas.html).
+
 ## Useful commands
 
  * `cdk bootstrap`   initialize assets before deploy
